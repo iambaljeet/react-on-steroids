@@ -119,9 +119,37 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Smooth scrolling for all browsers */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  
+  /* Hide default cursor on desktop */
+  @media (pointer: fine) {
+    * {
+      cursor: none !important;
+    }
+  }
+  
+  /* Show default cursor on touch devices */
+  @media (pointer: coarse) {
+    body {
+      cursor: auto !important;
+    }
+    * {
+      cursor: auto !important;
+    }
+  }
 }
 
-/* Simple animation helpers */
+/* Enhanced animation helpers */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
@@ -133,10 +161,76 @@
   100% { transform: translateY(0); }
 }
 
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
 .anim-fade-up {
   animation: fadeUp 600ms cubic-bezier(.2,.9,.3,1) both;
 }
 
 .anim-float {
   animation: float 4s ease-in-out infinite;
+}
+
+.anim-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+}
+
+.anim-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+/* Glassmorphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Text gradient animation */
+.text-gradient-animated {
+  background: linear-gradient(90deg, 
+    rgb(99, 102, 241), 
+    rgb(168, 85, 247), 
+    rgb(236, 72, 153),
+    rgb(99, 102, 241)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3s linear infinite;
+}
+
+/* Smooth shadow transitions */
+.shadow-transition {
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Improved focus states */
+:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+}
+
+/* Better hover transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }

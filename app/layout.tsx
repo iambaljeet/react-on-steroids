@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+import { CustomCursor } from "@/components/custom-cursor";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -33,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased cursor-none`}
       >
         <ThemeProvider
           attribute="class"
@@ -41,6 +42,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <CustomCursor />
           {children}
         </ThemeProvider>
       </body>
