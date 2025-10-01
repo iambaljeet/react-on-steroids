@@ -8,39 +8,89 @@ import { BookOpen, Code, Rocket, CheckCircle2, Clock, Layers } from "lucide-reac
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 md:py-32">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          <Badge variant="neutral" className="px-4 py-2 text-sm font-medium">
-            🎉 100% Complete - 17 Chapters Available
-          </Badge>
-          
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
-            React Native Course
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
-            From Zero to Production
-          </p>
-          
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A comprehensive, hands-on course designed for developers with <strong>NO React Native experience</strong>. 
-            Learn by building real projects with step-by-step explanations.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-            <Button asChild size="lg" className="text-lg px-8 py-6">
-              <Link href="/course/part1/what-is-react-native">
-                <BookOpen className="mr-2 h-5 w-5" />
-                Start Learning
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="neutral" className="text-lg px-8 py-6">
-              <Link href="/course">
-                <Layers className="mr-2 h-5 w-5" />
-                Browse Chapters
-              </Link>
-            </Button>
+      {/* Hero Section (two-column) */}
+      <section className="container mx-auto px-4 py-16 md:py-28">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+          <div className="md:col-span-7 lg:col-span-8">
+            <Badge variant="neutral" className="px-4 py-2 text-sm font-medium inline-block">
+              🎉 100% Complete • 17 Chapters
+            </Badge>
+
+            <h1 className="mt-6 text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-pink-500">
+              Learn React Native — build real apps
+            </h1>
+
+            <p className="mt-4 text-lg md:text-xl text-muted-foreground max-w-2xl">
+              A hands-on course that takes you from zero to production-ready React Native developer. Follow the lessons, run the examples, and ship your first app.
+            </p>
+
+            <div className="mt-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+              <Button asChild size="lg" className="text-lg px-6 py-4">
+                <Link href="/course/part1/what-is-react-native">
+                  <BookOpen className="mr-2 h-5 w-5" />
+                  Start Chapter 1
+                </Link>
+              </Button>
+
+              <Button asChild size="lg" variant="neutral" className="text-lg px-6 py-4">
+                <Link href="/course">
+                  <Layers className="mr-2 h-5 w-5" />
+                  Browse All Chapters
+                </Link>
+              </Button>
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-4">
+              <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+                <Code className="h-4 w-4 text-primary" />
+                <span>95+ Code Examples</span>
+              </div>
+              <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+                <Rocket className="h-4 w-4 text-primary" />
+                <span>Production Patterns</span>
+              </div>
+              <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+                <Clock className="h-4 w-4 text-primary" />
+                <span>~{courseStats.estimatedHours} Hours</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="md:col-span-5 lg:col-span-4">
+            <div className="rounded-2xl border p-6 shadow-lg bg-gradient-to-b from-white/60 to-muted/5 dark:from-black/60">
+              <h3 className="text-lg font-semibold">What's inside</h3>
+              <p className="mt-2 text-sm text-muted-foreground">A quick tour of the course highlights.</p>
+
+              <ul className="mt-4 space-y-3">
+                <li className="flex items-start gap-3">
+                  <Badge variant="neutral">Part 1</Badge>
+                  <div>
+                    <p className="text-sm font-medium">Foundations</p>
+                    <p className="text-xs text-muted-foreground">Components, Styling, Interaction</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Badge variant="neutral">Part 2</Badge>
+                  <div>
+                    <p className="text-sm font-medium">Core Concepts</p>
+                    <p className="text-xs text-muted-foreground">State, Navigation, Context</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Badge variant="neutral">Part 3</Badge>
+                  <div>
+                    <p className="text-sm font-medium">Advanced</p>
+                    <p className="text-xs text-muted-foreground">Testing, Native APIs, Performance</p>
+                  </div>
+                </li>
+              </ul>
+
+              <div className="mt-6">
+                <Button asChild variant="neutral" className="w-full">
+                  <Link href="/course">Explore the course</Link>
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
