@@ -9,18 +9,17 @@ import rehypeRaw from "rehype-raw";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ChevronLeft, ChevronRight, CheckCircle2, BookmarkPlus } from "lucide-react";
+import { ChevronLeft, ChevronRight, CheckCircle2 } from "lucide-react";
 import { getChapterBySlug, getNextChapter, getPreviousChapter } from "@/lib/course-data";
-import { Skeleton } from "@/components/ui/skeleton";
 import "highlight.js/styles/github-dark.css";
 
 interface ChapterContentProps {
   slug: string;
+  initialContent: string;
 }
 
-export function ChapterContent({ slug }: ChapterContentProps) {
-  const [content, setContent] = useState<string>("");
-  const [loading, setLoading] = useState(true);
+export function ChapterContent({ slug, initialContent }: ChapterContentProps) {
+  const [content] = useState<string>(initialContent);
   const [isCompleted, setIsCompleted] = useState(false);
 
   const chapter = getChapterBySlug(slug);
@@ -29,18 +28,6 @@ export function ChapterContent({ slug }: ChapterContentProps) {
 
   useEffect(() => {
     if (!chapter) return;
-
-    // Load chapter content
-    fetch(chapter.path)
-      .then((res) => res.text())
-      .then((text) => {
-        setContent(text);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error loading chapter:", err);
-        setLoading(false);
-      });
 
     // Check if chapter is completed
     const saved = localStorage.getItem("completedChapters");
@@ -79,20 +66,6 @@ export function ChapterContent({ slug }: ChapterContentProps) {
             <Link href="/course">Back to Course</Link>
           </Button>
         </Card>
-      </div>
-    );
-  }
-
-  if (loading) {
-    return (
-      <div className="container max-w-4xl mx-auto p-6 md:p-10 space-y-4">
-        <Skeleton className="h-12 w-3/4" />
-        <Skeleton className="h-6 w-1/2" />
-        <div className="space-y-3 pt-8">
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-3/4" />
-        </div>
       </div>
     );
   }
