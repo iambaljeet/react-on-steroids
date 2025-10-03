@@ -16,7 +16,7 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -27,8 +27,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
-    name: 🏗️ Build Application
+  build-and-deploy:
+    name: 🏗️ Build and Deploy
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout repository
@@ -74,10 +74,6 @@ jobs:
         with:
           version: 8
 
-      - name: ⚙️ Setup GitHub Pages
-        id: pages
-        uses: actions/configure-pages@v5
-
       - name: 📦 Install dependencies
         run: |
           echo "📥 Installing dependencies with ${{ steps.detect-package-manager.outputs.manager }}..."
@@ -112,22 +108,16 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "✅ Build completed successfully!" >> $GITHUB_STEP_SUMMARY
 
-      - name: 📤 Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: � Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: ./out
-
-  deploy:
-    name: 🚀 Deploy to GitHub Pages
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: 🌐 Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          publish_branch: gh-pages
+          force_orphan: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: '🚀 Deploy to GitHub Pages'
 
       - name: 🎊 Deployment summary
         run: |
@@ -135,7 +125,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Your application has been deployed to GitHub Pages! 🚀" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "🔗 **URL:** ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 **URL:** https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "---" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
